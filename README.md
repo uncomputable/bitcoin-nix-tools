@@ -6,6 +6,25 @@ No more complicated configuration.
 
 Let's make Bitcoin development as easy as possible!
 
+## Spread the nix
+
+Step zero is to clone this repo and the repo you want to infect with nix.
+
+In this example, we use Bitcoin Core.
+
+```bash
+git clone git@github.com:uncomputable/bitcoin-nix-tools.git
+git clone git@github.com:bitcoin/bitcoin.git
+```
+
+Then, copy the nix files over.
+
+```bash
+cp bitcoin-nix-tools/*.nix bitcoin
+```
+
+You have successfully spread the nix.
+
 ## Develop Bitcoin Core
 
 Open a nix shell with the [default settings](https://github.com/uncomputable/bitcoin-nix-tools/blob/master/shell.nix#L1-L5).
