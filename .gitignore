@@ -1,0 +1,15 @@
+# Ignore everything
+*
+
+# But do not ignore directories, so we can traverse them
+!*/
+
+# Do not ignore .gitignore itself
+
+!.gitignore
+
+# Do not ignore .nix files
+!*.nix
+
+# Do not ignore README.md
+!README.md
