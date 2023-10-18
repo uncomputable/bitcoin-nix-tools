@@ -76,7 +76,7 @@ Run the fuzzing targets.
 ```bash
 ./autogen.sh
 ./configure --enable-fuzz --with-sanitizers=address,fuzzer,undefined
-make test # use "-j N" for N parallel jobs
+make # use "-j N" for N parallel jobs
 FUZZ=process_message src/test/fuzz/fuzz
 ```
 
