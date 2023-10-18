@@ -13,7 +13,7 @@ let
   };
 in
   nixpkgs.mkShell.override {
-    stdenv = nixpkgs.clang14Stdenv; # requires recent version for fuzzing
+    stdenv = nixpkgs.clang16Stdenv; # requires recent version for fuzzing
   } {
     inherit (main.bitcoin) configureFlags;
     inputsFrom = [ main.bitcoin ];

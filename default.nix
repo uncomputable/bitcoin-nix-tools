@@ -9,7 +9,7 @@
 }:
 {
   bitcoin = with nixpkgs; callPackage ./bitcoin.nix {
-    stdenv = clang14Stdenv;
+    stdenv = clang16Stdenv;
     inherit (qt5) qtbase qttools wrapQtAppsHook;
     inherit (darwin) autoSignDarwinBinariesHook;
     python3 = python3.withPackages (p: with p; [
