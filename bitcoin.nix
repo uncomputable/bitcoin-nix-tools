@@ -21,11 +21,12 @@
 , withWallet ? true
 , withTests ? true
 , doCheck ? true
+, parallelBuild ? true
 }:
 
 assert doCheck -> withTests;
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = if withGui then "bitcoin" else "bitcoind";
   version = "dev";
 
@@ -64,7 +65,7 @@ stdenv.mkDerivation rec {
     "--with-qt-bindir=${qtbase.dev}/bin:${qttools.dev}/bin"
   ];
 
-  enableParallelBuilding = true;
+  enableParallelBuilding = parallelBuild;
   makeFlags = [ "VERBOSE=true" ];
 
   nativeCheckInputs = [ python3 ];
@@ -77,7 +78,7 @@ stdenv.mkDerivation rec {
     "QT_PLUGIN_PATH=${qtbase}/${qtbase.qtPluginPrefix}"
   ];
 
-  testRunnerFlags = [ ] ++ lib.optionals enableParallelBuilding [ "-j=$NIX_BUILD_CORES" ];
+  testRunnerFlags = [ ] ++ lib.optionals parallelBuild [ "-j=$NIX_BUILD_CORES" ];
   postCheck = if doCheck
   then ''
     patchShebangs test/functional
