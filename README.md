@@ -67,6 +67,40 @@ python3 test/functional/test_runner.py # use "--extended" to include ignored tes
 
 Read more about testing in the [official README](https://github.com/bitcoin/bitcoin/blob/master/test/README.md).
 
+### Fuzz Bitcoin Core
+
+Run the fuzzing targets.
+
+```bash
+./configure --enable-fuzz --with-sanitizers=address,fuzzer,undefined
+make test # use "-j N" for N parallel jobs
+FUZZ=process_message src/test/fuzz/fuzz
+```
+
+The variable `FUZZ` selects the fuzzing target.
+
+Targets are .cpp files in the [fuzz folder](https://github.com/bitcoin/bitcoin/tree/master/src/test/fuzz).
+
+Run the following command to list them.
+
+```bash
+grep -rl '^FUZZ_TARGET' src/test/fuzz | xargs -I {} basename {} .cpp
+```
+
+Download the [QA assets](https://github.com/bitcoin-core/qa-assets) for a massive headstart in code coverage.
+
+```bash
+git clone git@github.com:bitcoin-core/qa-assets.git
+```
+
+Run the fuzzer with the corpus directory set to the respective fuzz target in QA assets.
+
+```bash
+FUZZ=process_message src/test/fuzz/fuzz qa-assets/fuzz_seed_corpus/process_message/
+```
+
+Read more about fuzzing in the [official README](https://github.com/bitcoin/bitcoin/blob/master/doc/fuzzing.md).
+
 ## Build Bitcoin Core
 
 Build the package with the [default settings](https://github.com/uncomputable/bitcoin-nix-tools/blob/master/default.nix#L1-L6).
