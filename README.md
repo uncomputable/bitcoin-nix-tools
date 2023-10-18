@@ -17,7 +17,7 @@ git clone git@github.com:uncomputable/bitcoin-nix-tools.git
 git clone git@github.com:bitcoin/bitcoin.git
 ```
 
-Then, copy the nix files over.
+Then copy the nix files over.
 
 ```bash
 cp bitcoin-nix-tools/*.nix bitcoin
@@ -53,13 +53,15 @@ Read more about building in the [official README](https://github.com/bitcoin/bit
 
 ### Test Bitcoin Core
 
-Run the boost tests.
+First, build Bitcoin Core (see above).
+
+Then run the boost tests.
 
 ```bash
 make test # use "-j N" for N parallel jobs
 ```
 
-Run the functional tests.
+Or run the functional tests.
 
 ```bash
 python3 test/functional/test_runner.py # use "--extended" to include ignored tests
@@ -72,6 +74,7 @@ Read more about testing in the [official README](https://github.com/bitcoin/bitc
 Run the fuzzing targets.
 
 ```bash
+./autogen.sh
 ./configure --enable-fuzz --with-sanitizers=address,fuzzer,undefined
 make test # use "-j N" for N parallel jobs
 FUZZ=process_message src/test/fuzz/fuzz
