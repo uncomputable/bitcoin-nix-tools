@@ -120,8 +120,18 @@ nix-build -A bitcoin --arg withGui true --arg doCheck false
 
 ## Elements Core
 
-At the time of this writing (2023-10-17), you can build Elements Core exactly the same way as Bitcoin Core.
+At the time of this writing (2023-10-18), you can build Elements Core almost the same way as Bitcoin Core.
 
-Follow the instructions for Bitcoin Core to develop or build Elements Core.
+Simply follow the instructions for Bitcoin Core.
+
+**There is one thing you need to do.**
+
+Include the argument `$configureFlags` when you call the configure script. This applies also to fuzzing.
+
+_For some reason, Bitcoin Core 26 is more nix-friendly than Elements 22. This issue will likely resolve itself eventually._
+
+```bash
+./configure $configureFlags
+```
 
 For completeness, I will link the READMEs on [building](https://github.com/ElementsProject/elements/blob/master/doc/build-unix.md) and [testing](https://github.com/ElementsProject/elements/blob/master/test/README.md).
