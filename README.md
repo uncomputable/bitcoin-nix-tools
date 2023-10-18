@@ -39,7 +39,9 @@ Alternatively, open a shell with custom settings by passing arguments.
 nix-shell --arg withGui true
 ```
 
-Then, run the typical sequence of build commands.
+### Build Bitcoin Core
+
+Run the typical sequence of build commands.
 
 ```bash
 ./autogen.sh
@@ -48,6 +50,8 @@ make # use "-j N" for N parallel jobs
 ```
 
 Read more about building in the [official README](https://github.com/bitcoin/bitcoin/blob/master/doc/build-unix.md).
+
+### Test Bitcoin Core
 
 Run the boost tests.
 
