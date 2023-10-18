@@ -7,7 +7,7 @@
 }:
 {
   bitcoin = with nixpkgs; callPackage ./bitcoin.nix {
-    stdenv = nixpkgs.${env};
+    stdenv = clang14Stdenv;
     qtbase = qt5.qtbase;
     qttools = qt5.qttools;
     wrapQtAppsHook = qt5.wrapQtAppsHook;

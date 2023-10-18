@@ -10,6 +10,8 @@ let
     doCheck = false;
   };
 in
-  nixpkgs.mkShell {
+  nixpkgs.mkShell.override {
+    stdenv = nixpkgs.clang14Stdenv; # requires recent version for fuzzing
+  } {
     inputsFrom = [ main.bitcoin ];
   }
