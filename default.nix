@@ -1,5 +1,4 @@
 { nixpkgs ? import <nixpkgs> {}
-, env ? "stdenv"
 , withGui ? false
 , withWallet ? true
 , withTests ? true
