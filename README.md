@@ -4,7 +4,7 @@ Nix derivations to locally build and test Bitcoin Core and Elements Core.
 
 No more complicated configuration.
 
-Let's make Bitcoin development as easy as possible!
+Let's make Bitcoin Core development as easy as possible!
 
 ## Spread the nix
 
