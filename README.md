@@ -1,5 +1,7 @@
 # Bitcoin Nix Tools
 
+"The only reason why I am not a Core developer yet is because the setup is so hard."
+
 Nix derivations to locally build and test Bitcoin Core and Elements Core.
 
 No more complicated configuration.
