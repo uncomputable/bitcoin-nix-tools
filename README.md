@@ -72,7 +72,7 @@ make test # use "-j N" for N parallel jobs
 Or run the functional tests.
 
 ```bash
-python3 test/functional/test_runner.py # use "--extended" to include ignored tests
+python3 test/functional/test_runner.py # use "-j N" for N parallel jobs # use "--extended" to include ignored tests
 ```
 
 Read more about testing in the [official README](https://github.com/bitcoin/bitcoin/blob/master/test/README.md).
