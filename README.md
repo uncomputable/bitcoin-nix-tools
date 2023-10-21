@@ -117,6 +117,27 @@ FUZZ=process_message src/test/fuzz/fuzz qa-assets/fuzz_seed_corpus/process_messa
 
 Read more about fuzzing in the [official README](https://github.com/bitcoin/bitcoin/blob/master/doc/fuzzing.md).
 
+### Generate QA assets unit test data
+
+First, [build Bitcoin Core for testing](https://github.com/uncomputable/bitcoin-nix-tools/tree/master#build-bitcoin-core).
+
+Then run the Taproot tests a couple of times and dump the output in a directory.
+
+```bash
+mkdir dump
+for N in $(seq 1 10); do TEST_DUMP_DIR=dump test/functional/feature_taproot.py --dumptests; done
+```
+
+Second, [build Bitcoin Core for fuzzing](https://github.com/uncomputable/bitcoin-nix-tools/tree/master#fuzz-bitcoin-core).
+
+Then run the `script_assets_test_minimizer` fuzz test in merge mode, dump the output in another directory and use shell commands to create a .json file.
+
+```bash
+mkdir dump-min
+FUZZ=script_assets_test_minimizer ./src/test/fuzz/fuzz -merge=1 -use_value_profile=1 dump-min/ dump/
+(echo -en '[\n'; cat dump-min/* | head -c -2; echo -en '\n]') > script_assets_test.json
+```
+
 ## Build Bitcoin Core
 
 Build the package with the [default settings](https://github.com/uncomputable/bitcoin-nix-tools/blob/master/default.nix#L1-L6).
