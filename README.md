@@ -43,12 +43,18 @@ nix-shell --arg withGui true
 
 ### Build Bitcoin Core
 
-Run the typical sequence of build commands.
+Run the build commands with default settings.
 
 ```bash
 ./autogen.sh
 ./configure
 make # use "-j N" for N parallel jobs
+```
+
+The configure script lists the available options and default values.
+
+```bash
+./configure --help
 ```
 
 Read more about building in the [official README](https://github.com/bitcoin/bitcoin/blob/master/doc/build-unix.md).
@@ -73,12 +79,17 @@ Read more about testing in the [official README](https://github.com/bitcoin/bitc
 
 ### Fuzz Bitcoin Core
 
-Run the fuzzing targets.
+Run the build commands with fuzzing and sanitizers enabled.
 
 ```bash
 ./autogen.sh
 ./configure --enable-fuzz --with-sanitizers=address,fuzzer,undefined
 make # use "-j N" for N parallel jobs
+```
+
+Run a fuzzing target.
+
+```bash
 FUZZ=process_message src/test/fuzz/fuzz
 ```
 
@@ -86,7 +97,7 @@ The variable `FUZZ` selects the fuzzing target.
 
 Targets are .cpp files in the [fuzz folder](https://github.com/bitcoin/bitcoin/tree/master/src/test/fuzz).
 
-Run the following command to list them.
+Run the following command to list all targets.
 
 ```bash
 grep -rl '^FUZZ_TARGET' src/test/fuzz | xargs -I {} basename {} .cpp
@@ -98,7 +109,7 @@ Download the [QA assets](https://github.com/bitcoin-core/qa-assets) for a massiv
 git clone git@github.com:bitcoin-core/qa-assets.git
 ```
 
-Run the fuzzer with the corpus directory set to the respective fuzz target in QA assets.
+Run the fuzzer with the corpus directory set to the respective target in QA assets.
 
 ```bash
 FUZZ=process_message src/test/fuzz/fuzz qa-assets/fuzz_seed_corpus/process_message/
