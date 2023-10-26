@@ -75,6 +75,20 @@ Or run the functional tests.
 python3 test/functional/test_runner.py # use "-j N" for N parallel jobs # use "--extended" to include ignored tests
 ```
 
+Download the [QA assets](https://github.com/bitcoin-core/qa-assets).
+
+```bash
+git clone git@github.com:bitcoin-core/qa-assets.git
+```
+
+And run the unit test assets using the test runner.
+
+```bash
+DIR_UNIT_TEST_DATA=qa-assets/unit_test_data ./src/test/test_bitcoin --log_level=warning --run_test=script_tests
+```
+
+The variable `DIR_UNIT_TEST_DATA` selects the directory in which the file `script_assets_test.json` is located.
+
 Read more about testing in the [official README](https://github.com/bitcoin/bitcoin/blob/master/test/README.md).
 
 ### Fuzz Bitcoin Core
