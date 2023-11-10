@@ -13,3 +13,6 @@
 
 # Do not ignore README.md
 !README.md
+
+# Do not ignore LICENSE
+!LICENSE
