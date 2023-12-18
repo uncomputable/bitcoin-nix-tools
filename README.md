@@ -43,7 +43,7 @@ Run the automake commands.
 
 ```bash
 ./autogen.sh
-./configure
+./configure $configureFlags
 make # use "-j N" for N parallel jobs
 ```
 
@@ -109,7 +109,7 @@ Run the automake commands with fuzzing and sanitizers enabled.
 
 ```bash
 ./autogen.sh
-./configure --enable-fuzz --with-sanitizers=address,fuzzer,undefined
+./configure $configureFlags --enable-fuzz --with-sanitizers=address,fuzzer,undefined
 make # use "-j N" for N parallel jobs
 ```
 
@@ -178,18 +178,6 @@ FUZZ=script_assets_test_minimizer ./src/test/fuzz/fuzz -merge=1 -use_value_profi
 
 ## Elements Core
 
-At the time of this writing (2023-10-18), you can build Elements Core almost the same way as Bitcoin Core.
-
-Simply follow the instructions for Bitcoin Core.
-
-**There is one thing you need to do.**
-
-Include the argument `$configureFlags` when you call the configure script. This applies also to fuzzing.
-
-_For some reason, Bitcoin Core 26 is more nix-friendly than Elements 22. This issue will likely resolve itself eventually._
-
-```bash
-./configure $configureFlags
-```
+You can build, test and fuzz Elements Core exactly the same way as Bitcoin Core :)
 
 For completeness, I will link the READMEs on [building](https://github.com/ElementsProject/elements/blob/master/doc/build-unix.md) and [testing](https://github.com/ElementsProject/elements/blob/master/test/README.md).
