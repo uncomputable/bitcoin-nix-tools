@@ -27,23 +27,19 @@ cp bitcoin-nix-tools/*.nix bitcoin
 
 You have successfully spread the nix.
 
-## Develop Bitcoin Core
+## Test Bitcoin Core
 
-Open a nix shell with the [default settings](https://github.com/uncomputable/bitcoin-nix-tools/blob/master/shell.nix#L1-L5).
+### Enter the development environment
 
-```bash
-nix-shell
-```
-
-Alternatively, open a shell with custom settings by passing arguments.
+Open a nix shell.
 
 ```bash
-nix-shell --arg withGui true
+nix-shell # use "--arg withGui true" to include GUI
 ```
 
 ### Build Bitcoin Core
 
-Run the build commands with default settings.
+Run the automake commands.
 
 ```bash
 ./autogen.sh
@@ -57,23 +53,27 @@ The configure script lists the available options and default values.
 ./configure --help
 ```
 
-Read more about building in the [official README](https://github.com/bitcoin/bitcoin/blob/master/doc/build-unix.md).
+### Read more about building
 
-### Test Bitcoin Core
+Read the [official README](https://github.com/bitcoin/bitcoin/blob/master/doc/build-unix.md).
 
-First, build Bitcoin Core (see above).
+### Run the unit tests
 
-Then run the boost tests.
+Use make to run the boost unit tests.
 
 ```bash
 make test # use "-j N" for N parallel jobs
 ```
 
-Or run the functional tests.
+### Run the functional tests
+
+Use python to run the functional tests.
 
 ```bash
 python3 test/functional/test_runner.py # use "-j N" for N parallel jobs # use "--extended" to include ignored tests
 ```
+
+### Run the QA asset unit tests
 
 Download the [QA assets](https://github.com/bitcoin-core/qa-assets).
 
@@ -81,7 +81,7 @@ Download the [QA assets](https://github.com/bitcoin-core/qa-assets).
 git clone git@github.com:bitcoin-core/qa-assets.git
 ```
 
-And run the unit test assets using the test runner.
+Use the test runner to run the QA asset unit tests.
 
 ```bash
 DIR_UNIT_TEST_DATA=qa-assets/unit_test_data ./src/test/test_bitcoin --log_level=warning --run_test=script_tests
@@ -89,11 +89,23 @@ DIR_UNIT_TEST_DATA=qa-assets/unit_test_data ./src/test/test_bitcoin --log_level=
 
 The variable `DIR_UNIT_TEST_DATA` selects the directory in which the file `script_assets_test.json` is located.
 
-Read more about testing in the [official README](https://github.com/bitcoin/bitcoin/blob/master/test/README.md).
+### Read more about testing
 
-### Fuzz Bitcoin Core
+Read the [official README](https://github.com/bitcoin/bitcoin/blob/master/test/README.md).
 
-Run the build commands with fuzzing and sanitizers enabled.
+## Fuzz Bitcoin Core
+
+### Enter the development environment
+
+Open a nix shell.
+
+```bash
+nix-shell # use "--arg withGui true" to include GUI
+```
+
+### Build Bitcoin Core
+
+Run the automake commands with fuzzing and sanitizers enabled.
 
 ```bash
 ./autogen.sh
@@ -101,7 +113,9 @@ Run the build commands with fuzzing and sanitizers enabled.
 make # use "-j N" for N parallel jobs
 ```
 
-Run a fuzzing target.
+### Run a fuzzing target
+
+Use the compiled fuzzer binary to run a fuzzing target.
 
 ```bash
 FUZZ=process_message src/test/fuzz/fuzz
@@ -109,13 +123,13 @@ FUZZ=process_message src/test/fuzz/fuzz
 
 The variable `FUZZ` selects the fuzzing target.
 
-Targets are .cpp files in the [fuzz folder](https://github.com/bitcoin/bitcoin/tree/master/src/test/fuzz).
-
 Run the following command to list all targets.
 
 ```bash
 grep -rl '^FUZZ_TARGET' src/test/fuzz | xargs -I {} basename {} .cpp
 ```
+
+### Fuzz using the QA asset seed corpus
 
 Download the [QA assets](https://github.com/bitcoin-core/qa-assets) for a massive headstart in code coverage.
 
@@ -123,17 +137,23 @@ Download the [QA assets](https://github.com/bitcoin-core/qa-assets) for a massiv
 git clone git@github.com:bitcoin-core/qa-assets.git
 ```
 
-Run the fuzzer with the corpus directory set to the respective target in QA assets.
+Pass the corpus directory of the respective target to the fuzzer binary.
+
+The `FUZZ` variable and the folder in the corpus must be the same.
 
 ```bash
 FUZZ=process_message src/test/fuzz/fuzz qa-assets/fuzz_seed_corpus/process_message/
 ```
 
-Read more about fuzzing in the [official README](https://github.com/bitcoin/bitcoin/blob/master/doc/fuzzing.md).
+### Read more about fuzzing
 
-### Generate QA assets unit test data
+Read the [official README](https://github.com/bitcoin/bitcoin/blob/master/doc/fuzzing.md).
 
-First, [build Bitcoin Core for testing](https://github.com/uncomputable/bitcoin-nix-tools/tree/master#build-bitcoin-core).
+## Generate QA asset unit test data
+
+### Generate unit tests dumps
+
+[Build Bitcoin Core for testing](https://github.com/uncomputable/bitcoin-nix-tools/tree/master#test-bitcoin-core).
 
 Then run the Taproot tests a couple of times and dump the output in a directory.
 
@@ -142,9 +162,13 @@ mkdir dump
 for N in $(seq 1 10); do TEST_DUMP_DIR=dump test/functional/feature_taproot.py --dumptests; done
 ```
 
-Second, [build Bitcoin Core for fuzzing](https://github.com/uncomputable/bitcoin-nix-tools/tree/master#fuzz-bitcoin-core).
+### Compress test dumps via fuzz merging
 
-Then run the `script_assets_test_minimizer` fuzz test in merge mode, dump the output in another directory and use shell commands to create a .json file.
+[Build Bitcoin Core for fuzzing](https://github.com/uncomputable/bitcoin-nix-tools/tree/master#fuzz-bitcoin-core).
+
+Then run the `script_assets_test_minimizer` fuzz test in merge mode and dump the output in another directory.
+
+Use shell commands to create a .json file.
 
 ```bash
 mkdir dump-min
