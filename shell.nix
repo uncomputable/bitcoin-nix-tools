@@ -16,5 +16,11 @@ in
     stdenv = nixpkgs.clang16Stdenv; # requires recent version for fuzzing
   } {
     inherit (main.bitcoin) configureFlags;
-    inputsFrom = [ main.bitcoin ];
+    inputsFrom = [
+      main.bitcoin
+    ];
+    buildInputs = with nixpkgs; [
+      libllvm
+      lcov
+    ];
   }
