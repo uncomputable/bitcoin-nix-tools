@@ -1,6 +1,6 @@
 # Bitcoin Nix Tools
 
-"The only reason why I am not a Core developer yet is because the setup is so hard."
+"The only reason why I'm not a Core developer yet is because the setup is too hard."
 
 Nix derivations to locally build and test Bitcoin Core and Elements Core.
 
