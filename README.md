@@ -176,20 +176,6 @@ FUZZ=script_assets_test_minimizer ./src/test/fuzz/fuzz -merge=1 -use_value_profi
 (echo -en '[\n'; cat dump-min/* | head -c -2; echo -en '\n]') > script_assets_test.json
 ```
 
-## Build Bitcoin Core
-
-Build the package with the [default settings](https://github.com/uncomputable/bitcoin-nix-tools/blob/master/default.nix#L1-L6).
-
-```bash
-nix-build -A bitcoin
-```
-
-Alternatively, build the package with custom settings by passing arguments.
-
-```bash
-nix-build -A bitcoin --arg withGui true --arg doCheck false
-```
-
 ## Elements Core
 
 At the time of this writing (2023-10-18), you can build Elements Core almost the same way as Bitcoin Core.
