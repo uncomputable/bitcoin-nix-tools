@@ -176,6 +176,58 @@ FUZZ=script_assets_test_minimizer ./src/test/fuzz/fuzz -merge=1 -use_value_profi
 (echo -en '[\n'; cat dump-min/* | head -c -2; echo -en '\n]') > script_assets_test.json
 ```
 
+## Test code coverage of Bitcoin Core
+
+### Enter the development environment
+
+Open a nix shell.
+
+```bash
+nix-shell # use "--arg withGui true" to include GUI
+```
+
+### Build Bitcoin Core
+
+Run the automake commands with line and branch coverage enabled.
+
+Disable BDB to avoid compiling and testing the legacy wallet.
+
+```bash
+./autogen.sh
+./configure $configureFlags --enable-lcov --enable-lcov-branch-coverage --disable-bdb
+make # use "-j N" for N parallel jobs
+```
+
+The compiled binaries will log their coverage in separate files each time they are run.
+
+### Test unit test coverage
+
+Use make to run the unit tests and to compile an HTML coverage report.
+
+```bash
+make test_bitcoin.coverage/.dirstamp # use "-j N" for N parallel jobs
+```
+
+Open the report in your browser.
+
+```bash
+firefox test_bitcoin.coverage/src/index.html
+```
+
+### Test total coverage
+
+Use make to run the unit and functional tests, and to compile an HTML coverage report.
+
+```bash
+make cov # use "-j N" for N parallel jobs
+```
+
+Open the report in your browser.
+
+```bash
+firefox test_bitcoin.coverage/src/index.html
+```
+
 ## Elements Core
 
 You can build, test and fuzz Elements Core exactly the same way as Bitcoin Core :)
