@@ -22,5 +22,7 @@ in
     buildInputs = with nixpkgs; [
       libllvm
       lcov
+      cmake
+      capnproto
     ];
   }
