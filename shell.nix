@@ -1,6 +1,6 @@
 { nixpkgs ? import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/057f9aecfb71c4437d2b27d3323df7f93c010b7e.tar.gz";
-    sha256 = "1ndiv385w1qyb3b18vw13991fzb9wg4cl21wglk89grsfsnra41k";
+    url = "https://github.com/NixOS/nixpkgs/archive/871b9fd269ff6246794583ce4ee1031e1da71895.tar.gz";
+    sha256 = "1zn1lsafn62sz6azx6j735fh4vwwghj8cc9x91g5sx2nrg23ap9k";
   }) {}
 , withGui ? false
 , withWallet ? true
@@ -13,7 +13,7 @@ let
   };
 in
   nixpkgs.mkShell.override {
-    stdenv = nixpkgs.clang16Stdenv; # required for fuzzing; must be recent version
+    stdenv = nixpkgs.clang19Stdenv; # required for fuzzing; must be recent version
   } {
     inherit (main.bitcoin) configureFlags;
     inputsFrom = [
