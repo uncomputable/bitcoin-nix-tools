@@ -1,5 +1,9 @@
 # Bitcoin Nix Tools
 
+> [!WARNING]
+>
+> This repository has been archived. Use [bix](https://github.com/bitcoin-dev-tools/bix) instead.
+
 "The only reason why I'm not a Core developer yet is because the setup is too hard."
 
 Nix derivations to locally build and test Bitcoin Core and Elements Core.
